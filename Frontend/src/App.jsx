@@ -1,7 +1,7 @@
 import './App.css'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import Home from './pages/Home'
-import Auth from './pages/Auth' // New page for both login and register
+import Auth from './pages/Auth'
 
 function App() {
   const router = createBrowserRouter([
@@ -11,7 +11,7 @@ function App() {
     },
     {
       path: '/auth',
-      element: <Auth />, // Single page for login and register
+      element: <Auth />,
     },
   ]);
 
