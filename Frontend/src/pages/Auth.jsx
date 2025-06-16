@@ -1,7 +1,11 @@
 import React, { useState } from 'react';
-import axios from 'axios'; // Import axios
+import axios from 'axios';
+import { useDispatch } from 'react-redux';
+import { setUser } from '../redux/userSlice'; // Fixed casing
+import { useNavigate } from 'react-router-dom';
 
 const Auth = () => {
+  const navigate = useNavigate();
   const [isLogin, setIsLogin] = useState(true);
   const [formData, setFormData] = useState({
     username: '',
@@ -10,6 +14,7 @@ const Auth = () => {
     address: '',
     contactNumber: '',
   });
+  const dispatch = useDispatch();
 
   const toggleAuthMode = () => setIsLogin((prev) => !prev);
 
@@ -20,19 +25,24 @@ const Auth = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(import.meta.env); // Log the environment variables for debugging
-    const backendUrl = import.meta.env.VITE_BACKEND_URL // Use Vite's environment variable syntax
+    const backendUrl = import.meta.env.VITE_BACKEND_URL;
     const url = `${backendUrl}${isLogin ? '/auth/login' : '/auth/register'}`;
-    console.log(`Submitting to URL: ${url}`); // Log the URL for debugging
     const payload = isLogin
       ? { email: formData.email, password: formData.password }
       : formData;
 
     try {
-      const response = await axios.post(url, payload,{ withCredentials: true }); // Use axios for POST request
-      console.log(response.data); // Handle response
+      const response = await axios.post(url, payload, { withCredentials: true });
+      dispatch(setUser(response.data.user)); // Set user data in Redux
+
+      // Redirect based on role
+      if (response.data.user.role === 'seller') {
+        navigate('/seller');
+      } else {
+        navigate('/products');
+      }
     } catch (error) {
-      console.error('Error:', error.response?.data || error.message); // Handle error
+      console.error('Error:', error.response?.data || error.message);
     }
   };
 
@@ -40,7 +50,7 @@ const Auth = () => {
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100">
       <h1 className="text-2xl font-bold mb-6">{isLogin ? 'Login' : 'Register'}</h1>
       <form className="bg-white p-6 rounded shadow-md w-80" onSubmit={handleSubmit}>
-            <div className="mb-4">
+        <div className="mb-4">
           <label htmlFor="email" className="block text-sm font-medium text-gray-700">
             Email:
           </label>

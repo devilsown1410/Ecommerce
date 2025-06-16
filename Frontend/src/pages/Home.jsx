@@ -8,7 +8,7 @@ export default function Home() {
         This is a simple home page built with React and Tailwind CSS.
       </p>
       <a
-        href="/login"
+        href="/auth"
         className="px-6 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition"
       >
         Go to Login

@@ -16,9 +16,15 @@ const handleRegister=async (req, res) => {
         address
     });
     await user.save();
-    const token = jwt.sign({ id: user._id, email: user.email }, process.env.JWT_SECRET, { expiresIn: '1h' });
-    res.setHeader('Set-Cookie', cookie.serialize('token', token, { httpOnly: true, secure: process.env.NODE_ENV === 'production' }));
-    res.status(201).json({ message: 'User registered successfully',user: { id: user._id, name: user.username, email: user.email } });
+    const token = jwt.sign({ user:user }, process.env.JWT_SECRET, { expiresIn: '1h' });
+    // res.setHeader('Set-Cookie', cookie.serialize('token', token, { httpOnly: true, secure: process.env.NODE_ENV === 'production' }));
+    res.cookie('token', token, {
+        httpOnly: true,
+        secure: false,                // true only if using HTTPS
+        sameSite: 'Lax',              // 'None' only if cross-site & HTTPS
+        maxAge: 2 * 60 * 60 * 1000,   // 2 hours
+      });
+    res.status(201).json({ message: 'User registered successfully',user: user });
 }
 
 const handleLogin = async (req, res) => {
@@ -30,9 +36,24 @@ const handleLogin = async (req, res) => {
     if (user.password !== password) {
         return res.status(401).json({ message: 'Invalid password' });
     }
-    const token = jwt.sign({ id: user._id, email: user.email }, process.env.JWT_SECRET, { expiresIn: '1h' });
-    res.setHeader('Set-Cookie', cookie.serialize('token', token, { httpOnly: true, secure: process.env.NODE_ENV === 'production' }));
-    res.status(200).json({ message: 'Login successful' , user: { id: user._id, name: user.name, email: user.email } });
+    const token = jwt.sign({ user:user }, process.env.JWT_SECRET, { expiresIn: '1h' });
+    // res.setHeader('Set-Cookie', cookie.serialize('token', token, { httpOnly: true, secure: process.env.NODE_ENV === 'production' }));
+    res.cookie('token', token, {
+        httpOnly: true,
+        secure: false,                // true only if using HTTPS
+        sameSite: 'Lax',              // 'None' only if cross-site & HTTPS
+        maxAge: 2 * 60 * 60 * 1000,   // 2 hours
+      });
+    res.status(200).json({ message: 'Login successful' , user:user});
 }
 
-export { handleRegister, handleLogin };
+const handleLogout = (req, res) => {
+    res.clearCookie('token', {
+        httpOnly: true,
+        secure: false,                // true only if using HTTPS
+        sameSite: 'Lax',              // 'None' only if cross-site & HTTPS
+    });
+    return res.json({ message: 'Logged out successfully' });
+}
+
+export { handleRegister, handleLogin ,handleLogout };
