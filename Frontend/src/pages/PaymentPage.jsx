@@ -2,10 +2,10 @@ import React, { useState, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { clearCart, updateCart } from '../redux/cartSlice';
-import axios from 'axios'; // Import axios for API calls
+import axios from 'axios';
 
-const TAX_RATE = 0.1;          // 10 % GST
-const SHIPPING_FEE = 49;       // flat rate (free over ₹1000 below)
+const TAX_RATE = 0.1;
+const SHIPPING_FEE = 49;
 
 const PaymentPage = () => {
   const items = useSelector((state) => Array.isArray(state.cart.items) ? state.cart.items : []);
@@ -81,13 +81,11 @@ const PaymentPage = () => {
       return;
     }
 
-    // Map items to include only product ID and quantity
     const orderItems = items.map((item) => ({
       product: item._id,
       quantity: item.quantity,
     }));
 
-    // Create order details
     const orderDetails = {
       items: orderItems,
       address,
@@ -97,14 +95,12 @@ const PaymentPage = () => {
     };
 
     try {
-      // Send order details to the backend
       await axios.post(`${import.meta.env.VITE_BACKEND_URL}/orders`, orderDetails,{withCredentials: true});
 
-      // Clear cart after successful payment
       dispatch(clearCart());
 
       alert('Payment successful! 🎉');
-      navigate('/products'); // Navigate to Orders section
+      navigate('/products');
     } catch (error) {
       console.error('Failed to create order:', error);
       setError('Failed to process your order. Please try again.');

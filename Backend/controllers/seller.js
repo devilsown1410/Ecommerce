@@ -19,7 +19,7 @@ const addProduct = async(req, res) => {
             return res.status(403).json({ message: 'You are not authorized to add products' }); 
         }
         const productData = req.body;
-        const sellerId = req.user.user._id; // Assuming req.user is populated by the auth middleware
+        const sellerId = req.user.user._id;
         if (!mongoose.Types.ObjectId.isValid(sellerId)) {
             return res.status(400).json({ message: 'Invalid seller ID' });
         }

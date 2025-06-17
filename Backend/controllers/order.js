@@ -35,8 +35,8 @@ const createOrder = async (req, res) => {
 
 const getOrdersByUser = async (req, res) => {
     try {
-        const userId = req.user.user._id; // Assuming auth middleware adds user to req
-        const orders = await Order.find({ user: userId }).populate('items.product').populate('user'); // Populate user and product details
+        const userId = req.user.user._id;
+        const orders = await Order.find({ user: userId }).populate('items.product').populate('user');
         res.status(200).json(orders);
     } catch (error) {
         res.status(500).json({ message: "Failed to fetch orders", error: error.message });
@@ -46,7 +46,7 @@ const getOrdersByUser = async (req, res) => {
 const cancelOrder = async (req, res) => {
     try {
         const orderId = req.params.id;
-        const userId = req.user.user._id; // Assuming auth middleware adds user to req
+        const userId = req.user.user._id;
 
         const order = await Order.findOne({ _id: orderId, user: userId });
         if (!order) {
@@ -65,7 +65,7 @@ const cancelOrder = async (req, res) => {
 const editOrder = async (req, res) => {
     try {
         const orderId = req.params.id;
-        const userId = req.user.user._id; // Assuming auth middleware adds user to req
+        const userId = req.user.user._id;
 
         const updateResult = await Order.updateOne(
             { _id: orderId, user: userId },

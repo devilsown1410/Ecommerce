@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { useDispatch } from 'react-redux';
+import { clearUserData } from '../redux/userSlice';
 
 const SellerDashboard = () => {
-  const [products, setProducts] = useState([]); // Ensure products is initialized as an array
+  const [products, setProducts] = useState([]);
   const [newProduct, setNewProduct] = useState({ name: '', description: '', price: '', category: '', stock: '', imageUrl: '' });
   const [categories] = useState([
     { id: 1, name: 'Electronics' },
@@ -11,6 +13,7 @@ const SellerDashboard = () => {
     { id: 4, name: 'Books' },
     { id: 5, name: 'Sports' },
   ]);
+  const dispatch = useDispatch();
 
   const fetchProducts = async () => {
     try {
@@ -21,10 +24,10 @@ const SellerDashboard = () => {
     }
   };
 
-  const handleLogout = () => {
-    axios.post(`${import.meta.env.VITE_BACKEND_URL}/auth/logout`, {}, { withCredentials: true })
-    
-    window.location.href = '/auth'; // Redirect to login page after logout
+  const handleLogout = async() => {
+    await axios.post(`${import.meta.env.VITE_BACKEND_URL}/auth/logout`, {}, { withCredentials: true })
+    dispatch(clearUserData());
+    window.location.href = '/auth';
   };
 
   useEffect(() => {
@@ -35,7 +38,7 @@ const SellerDashboard = () => {
     try {
       await axios.post(`${import.meta.env.VITE_BACKEND_URL}/seller`, newProduct, { withCredentials: true });
       setNewProduct({ name: '', description: '', price: '', category: '', stock: '', imageUrl: '' });
-      fetchProducts(); // Fetch updated products
+      fetchProducts();
     } catch (error) {
       console.error('Error adding product:', error);
     }
@@ -44,7 +47,7 @@ const SellerDashboard = () => {
   const handleRemoveProduct = async (id) => {
     try {
       await axios.delete(`${import.meta.env.VITE_BACKEND_URL}/seller/${id}`, { withCredentials: true });
-      fetchProducts(); // Fetch updated products
+      fetchProducts();
     } catch (error) {
       console.error('Error removing product:', error);
     }
@@ -53,7 +56,7 @@ const SellerDashboard = () => {
   const handleUpdateProduct = async (id, updatedProduct) => {
     try {
       await axios.put(`${import.meta.env.VITE_BACKEND_URL}/seller/${id}`, updatedProduct, { withCredentials: true });
-      fetchProducts(); // Fetch updated products
+      fetchProducts();
     } catch (error) {
       console.error('Error updating product:', error);
     }

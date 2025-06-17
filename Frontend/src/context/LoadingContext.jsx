@@ -3,7 +3,7 @@ import React, { createContext, useState } from 'react';
 // eslint-disable-next-line react-refresh/only-export-components
 export const LoadingContext = createContext({
   loading: false,
-  setLoading: () => {}, // Default no-op function
+  setLoading: () => {},
 });
 
 export const LoadingProvider = ({ children }) => {
@@ -13,7 +13,7 @@ export const LoadingProvider = ({ children }) => {
     <LoadingContext.Provider value={{ loading, setLoading }}>
       {loading && (
         <div className="fixed inset-0 flex items-center justify-center z-50">
-          <div className="loader animate-spin rounded-full h-16 w-16 border-t-4 border-blue-500 border-solid"></div> {/* Spinner without background */}
+          <div className="loader animate-spin rounded-full h-16 w-16 border-t-4 border-blue-500 border-solid"></div>
         </div>
       )}
       {children}
@@ -21,5 +21,4 @@ export const LoadingProvider = ({ children }) => {
   );
 };
 
-// Ensure proper export
 export default LoadingProvider;

@@ -24,7 +24,7 @@ const Auth = () => {
   };
 
   const handleAuthSuccess = (userData) => {
-    dispatch(setUserData(userData)); // Store user data in Redux
+    dispatch(setUserData(userData));
   };
 
   const handleSubmit = async (e) => {
@@ -37,8 +37,7 @@ const Auth = () => {
 
     try {
       const response = await axios.post(url, payload, { withCredentials: true });
-      // dispatch(setUser(response.data.user)); // Set user data in Redux
-      handleAuthSuccess(response.data.user); // Dispatch setUserData action
+      handleAuthSuccess(response.data.user);
 
       // Redirect based on role
       if (response.data.user.role === 'seller') {

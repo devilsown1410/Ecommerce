@@ -87,7 +87,7 @@ const ProductsSection = () => {
         </select>
         <button
           onClick={toggleCartModal}
-          className="relative bg-green-600 text-white py-2 px-4 rounded hover:bg-green-700"
+          className="relative bg-green-600 text-white py-2 px-4 rounded hover:bg-green-700 cursor-pointer"
         >
           Cart
           {badgeCount > 0 && (
@@ -98,19 +98,26 @@ const ProductsSection = () => {
         </button>
       </div>
 
-      {/* product grid */}
+      {/* enhanced product grid */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
         {filteredProducts.map((p) => {
           const qty = quantities[p._id] ?? 1;
           return (
-            <div key={p._id} className="bg-white p-4 rounded shadow-md">
+            <div
+              key={p._id}
+              className="bg-white p-4 rounded shadow-md hover:shadow-lg transition-shadow duration-300 relative"
+            >
               <img
                 src={p.imageUrl || PLACEHOLDER_IMG}
                 alt={p.name}
                 className="w-full h-40 object-cover rounded mb-4"
               />
-              <h2 className="text-lg font-semibold">{p.name}</h2>
-              <p className="text-gray-700">${p.price}</p>
+              <h2 className="text-lg font-semibold truncate">{p.name}</h2>
+              <div className="flex items-center gap-2 mt-2">
+                <span className="text-yellow-500 text-sm">★ ★ ★ ★ ☆</span>
+                <span className="text-gray-500 text-sm">(120 reviews)</span>
+              </div>
+              <p className="text-gray-700 font-bold mt-2">${p.price}</p>
               <p className="text-gray-600 mt-2 line-clamp-3">{p.description}</p>
               <div className="mt-4 flex items-center gap-2">
                 <input
@@ -124,7 +131,7 @@ const ProductsSection = () => {
                 />
                 <button
                   onClick={() => addToCart(p, qty)}
-                  className="bg-blue-600 text-white py-2 px-4 rounded hover:bg-blue-700"
+                  className="bg-blue-600 text-white py-2 px-4 rounded hover:bg-blue-700 cursor-pointer"
                 >
                   Add&nbsp;to&nbsp;Cart
                 </button>
@@ -142,7 +149,7 @@ const ProductsSection = () => {
               <h2 className="text-2xl font-bold">Your Cart</h2>
               <button
                 onClick={toggleCartModal}
-                className="text-red-600 hover:underline"
+                className="text-red-600 hover:underline cursor-pointer"
               >
                 Close
               </button>
@@ -196,7 +203,7 @@ const ProductsSection = () => {
                             updateCart(items.filter((i) => i._id !== item._id))
                           )
                         }
-                        className="text-red-600 text-sm hover:underline mt-2"
+                        className="text-red-600 text-sm hover:underline mt-2 cursor-pointer"
                       >
                         Remove
                       </button>
@@ -219,7 +226,7 @@ const ProductsSection = () => {
                     setShowCartModal(false);
                     navigate('/payment')
                   }}
-                  className="bg-indigo-600 text-white py-2 px-6 rounded hover:bg-indigo-700"
+                  className="bg-indigo-600 text-white py-2 px-6 rounded hover:bg-indigo-700 cursor-pointer"
                 >
                   Proceed to Checkout
                 </button>

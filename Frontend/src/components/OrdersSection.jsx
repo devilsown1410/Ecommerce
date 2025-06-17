@@ -40,7 +40,7 @@ const OrdersSection = () => {
           withCredentials: true,
         }
       );
-      await fetchOrders(); // Re-fetch orders after cancellation
+      await fetchOrders();
     } catch (error) {
       console.error('Error canceling order:', error);
     } finally {
@@ -56,7 +56,7 @@ const OrdersSection = () => {
         { shippingAddress: newAddress },
         { withCredentials: true }
       );
-      await fetchOrders(); // Re-fetch orders after editing
+      await fetchOrders();
     } catch (error) {
       console.error('Error editing order:', error);
     } finally {
