@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useDispatch } from 'react-redux';
-import { setUser } from '../redux/userSlice'; // Fixed casing
+import { setUserData } from '../redux/userSlice'; // Fixed casing
 import { useNavigate } from 'react-router-dom';
 
 const Auth = () => {
@@ -23,6 +23,10 @@ const Auth = () => {
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
+  const handleAuthSuccess = (userData) => {
+    dispatch(setUserData(userData)); // Store user data in Redux
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     const backendUrl = import.meta.env.VITE_BACKEND_URL;
@@ -33,7 +37,8 @@ const Auth = () => {
 
     try {
       const response = await axios.post(url, payload, { withCredentials: true });
-      dispatch(setUser(response.data.user)); // Set user data in Redux
+      // dispatch(setUser(response.data.user)); // Set user data in Redux
+      handleAuthSuccess(response.data.user); // Dispatch setUserData action
 
       // Redirect based on role
       if (response.data.user.role === 'seller') {

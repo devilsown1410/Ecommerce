@@ -1,14 +1,12 @@
 import React from 'react';
-import { Provider } from 'react-redux';
-import { PersistGate } from 'redux-persist/integration/react';
-import store, { persistor } from './Redux/store';
-import './App.css';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import './App.css';
 import Home from './pages/Home';
 import Auth from './pages/Auth';
 import ProductList from './pages/CustomerDashboard';
 import SellerDashboard from './pages/SellerDashboard'; // Rename AdminDashboard to SellerDashboard
 import PaymentPage from './pages/PaymentPage'; // Import PaymentPage
+import LoadingProvider from './context/LoadingContext';
 
 function App() {
   const router = createBrowserRouter([
@@ -35,11 +33,9 @@ function App() {
   ]);
 
   return (
-    <Provider store={store}>
-      <PersistGate loading={null} persistor={persistor}>
-        <RouterProvider router={router} />
-      </PersistGate>
-    </Provider>
+    <LoadingProvider>
+      <RouterProvider router={router} />
+    </LoadingProvider>
   );
 }
 

@@ -8,6 +8,7 @@ import authRoutes from './routes/authRoutes.js';
 import cookieParser from 'cookie-parser';
 import sellerRoutes from './routes/sellerRoutes.js'
 import productRoutes from './routes/productRoutes.js';
+import orderRoutes from './routes/orderRoutes.js'
 dotenv.config();
 
 const app = express();
@@ -28,6 +29,7 @@ app.use(helmet());
 app.use('/auth', authRoutes);
 app.use('/seller', sellerRoutes); 
 app.use('/products', productRoutes); // Assuming you want to use the same routes for products
+app.use('/orders', orderRoutes); // Assuming you have an orderRoutes file
 
 connectDB();
 app.get('/', (req, res) => {
