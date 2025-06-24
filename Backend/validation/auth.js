@@ -10,6 +10,7 @@ const registerSchema = yup.object().shape({
     password: yup.string().min(6, 'Password must be at least 6 characters long').required('Password is required'),
     contactNumber: yup.string().matches(/^\d{10}$/, 'Contact number must be 10 digits').required('Contact number is required'),
     address: yup.string().required('Address is required'),
+    role: yup.string().oneOf(['customer', 'seller'], 'Role must be either customer or seller').required('Role is required'),
 });
 
 

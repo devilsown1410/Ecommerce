@@ -9,6 +9,7 @@ import cookieParser from 'cookie-parser';
 import sellerRoutes from './routes/sellerRoutes.js'
 import productRoutes from './routes/productRoutes.js';
 import orderRoutes from './routes/orderRoutes.js'
+import addressRoutes from './routes/addressRoutes.js'
 dotenv.config();
 
 const app = express();
@@ -16,9 +17,9 @@ const PORT = process.env.PORT || 8080;
 app.use(cookieParser());
 app.use(cors(
   {
-    origin: 'http://localhost:5173', // Frontend origin
-    methods: ['GET', 'POST', 'PUT', 'DELETE'], // Allowed HTTP methods
-    credentials: true, // Allow cookies to be sent
+    origin: 'http://localhost:5173',
+    methods: ['GET', 'POST', 'PUT', 'DELETE'],
+    credentials: true,
   }
 ));
 app.use(bodyParser.json());
@@ -28,8 +29,9 @@ app.use(helmet());
 // Import routes
 app.use('/auth', authRoutes);
 app.use('/seller', sellerRoutes); 
-app.use('/products', productRoutes); // Assuming you want to use the same routes for products
-app.use('/orders', orderRoutes); // Assuming you have an orderRoutes file
+app.use('/products', productRoutes);
+app.use('/orders', orderRoutes);
+app.use('/address', addressRoutes);
 
 connectDB();
 app.get('/', (req, res) => {

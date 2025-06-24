@@ -22,9 +22,10 @@ const userSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
-    isSeller: {
-        type: Boolean,
-        default: false,
+    role: {
+        type: String,
+        enum: ["customer", "seller"],
+        default: "customer",
     },
 }, {
   timestamps: true,

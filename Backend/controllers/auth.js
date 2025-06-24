@@ -1,9 +1,8 @@
 import User from '../models/user.js';
 import jwt from 'jsonwebtoken';
 const handleRegister=async (req, res) => {
-    const { username, email, password, contactNumber, address } = req.body;
+    const { username, email, password, contactNumber, address, role } = req.body;
     const existingUser = await User.find({ email: email });
-    console.log(existingUser);
     if (existingUser && existingUser.length > 0) {
         return res.status(400).json({ message: 'User already exists' });
     }
@@ -12,7 +11,8 @@ const handleRegister=async (req, res) => {
         email,
         password,
         contactNumber,
-        address
+        address,
+        role,
     });
     await user.save();
     const token = jwt.sign({ user:user }, process.env.JWT_SECRET, { expiresIn: '1h' });
@@ -20,7 +20,7 @@ const handleRegister=async (req, res) => {
         httpOnly: true,
         secure: false,                
         sameSite: 'Lax',              
-        maxAge: 2 * 60 * 60 * 1000,  
+        maxAge: 1 * 60 * 60 * 1000,  
       });
     res.status(201).json({ message: 'User registered successfully',user: user });
 }

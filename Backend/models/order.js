@@ -18,6 +18,11 @@ const orderSchema = new mongoose.Schema({
                 type: Number,
                 required: true,
                 min: 1
+            },
+            status:{
+                type: String,
+                enum: ["pending", "shipped", "delivered", "cancelled"],
+                default: "pending"
             }
         }
     ],

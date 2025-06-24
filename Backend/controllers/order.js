@@ -8,7 +8,8 @@ const createOrder = async (req, res) => {
             user: userId,
             items: items.map(item => ({
                 product: item.product,
-                quantity: item.quantity
+                quantity: item.quantity,
+                status: "pending",
             })),
             shippingAddress: {
                 fullName: address.fullName,
@@ -66,10 +67,10 @@ const editOrder = async (req, res) => {
     try {
         const orderId = req.params.id;
         const userId = req.user.user._id;
-
         const updateResult = await Order.updateOne(
             { _id: orderId, user: userId },
-            { $set: req.body }
+            { $set: req.body },
+            { new: true }
         );
 
         if (updateResult.matchedCount === 0) {
