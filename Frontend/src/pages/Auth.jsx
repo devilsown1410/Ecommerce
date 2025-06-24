@@ -32,7 +32,9 @@ const Auth = () => {
       : values;
 
     try {
-      const response = await axios.post(url, payload, { withCredentials: true });
+      const response = await axios.post(url, payload, {
+        withCredentials: true,
+      });
       handleAuthSuccess(response.data.user);
       navigate(response.data.user.role === "seller" ? "/seller" : "/products");
     } catch (e) {
@@ -99,7 +101,9 @@ const Auth = () => {
             {({ isSubmitting }) => (
               <Form className="space-y-4">
                 {backendError && (
-                  <div className="text-sm text-red-500 text-center">{backendError}</div>
+                  <div className="text-sm text-red-500 text-center">
+                    {backendError}
+                  </div>
                 )}
 
                 <FieldInput

@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars*/
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useFormik } from "formik";
@@ -65,7 +66,8 @@ const SavedAddressesSection = () => {
     })
   );
 
-  const currentEditing = addresses.find((a) => a._id === editId) || EMPTY_ADDRESS;
+  const currentEditing =
+    addresses.find((a) => a._id === editId) || EMPTY_ADDRESS;
 
   const editFormik = useFormik({
     ...getAddressValidationConfig(async (values, { resetForm }) => {
@@ -159,11 +161,23 @@ const SavedAddressesSection = () => {
               {editId === addr._id ? (
                 <form onSubmit={editFormik.handleSubmit} className="space-y-4">
                   {[
-                    { name: "fullName", label: "Full Name", placeholder: "John Doe" },
-                    { name: "line1", label: "Address Line 1", placeholder: "123 Street" },
+                    {
+                      name: "fullName",
+                      label: "Full Name",
+                      placeholder: "John Doe",
+                    },
+                    {
+                      name: "line1",
+                      label: "Address Line 1",
+                      placeholder: "123 Street",
+                    },
                     { name: "city", label: "City", placeholder: "Mumbai" },
                     { name: "pin", label: "PIN Code", placeholder: "400001" },
-                    { name: "phone", label: "Phone", placeholder: "9876543210" },
+                    {
+                      name: "phone",
+                      label: "Phone",
+                      placeholder: "9876543210",
+                    },
                   ].map((f) => renderInput(editFormik, f))}
 
                   <div className="flex gap-3">
@@ -189,7 +203,9 @@ const SavedAddressesSection = () => {
                   <div className="text-gray-800 space-y-1">
                     <p className="font-semibold text-lg">{addr.fullName}</p>
                     <p>{addr.line1}</p>
-                    <p>{addr.city} – {addr.pin}</p>
+                    <p>
+                      {addr.city} – {addr.pin}
+                    </p>
                     <p className="text-sm text-gray-500">📞 {addr.phone}</p>
                   </div>
                   <div className="flex flex-col gap-2">
@@ -239,7 +255,11 @@ const SavedAddressesSection = () => {
         >
           {[
             { name: "fullName", label: "Full Name", placeholder: "John Doe" },
-            { name: "line1", label: "Address Line 1", placeholder: "123 Street" },
+            {
+              name: "line1",
+              label: "Address Line 1",
+              placeholder: "123 Street",
+            },
             { name: "city", label: "City", placeholder: "Mumbai" },
             { name: "pin", label: "PIN Code", placeholder: "400001" },
             { name: "phone", label: "Phone Number", placeholder: "9876543210" },

@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars*/
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useDispatch } from "react-redux";
@@ -30,7 +31,7 @@ const SellerDashboard = () => {
   const [selectedItems, setSelectedItems] = useState([]);
 
   const toggleItemSelection = (itemId, orderId) => {
-setOrderId(orderId); // Set the orderId dynamically
+    setOrderId(orderId); // Set the orderId dynamically
     setSelectedItems((prev) =>
       prev.includes(itemId)
         ? prev.filter((id) => id !== itemId)
@@ -40,10 +41,14 @@ setOrderId(orderId); // Set the orderId dynamically
 
   const handleUpdateSelectedItemsStatus = async (newStatus) => {
     try {
-      await axios.put(`${import.meta.env.VITE_BACKEND_URL}/seller/orderStatus/${orderId}`, {
-        itemIds: selectedItems,
-        status: newStatus,
-      },{withCredentials:true});
+      await axios.put(
+        `${import.meta.env.VITE_BACKEND_URL}/seller/orderStatus/${orderId}`,
+        {
+          itemIds: selectedItems,
+          status: newStatus,
+        },
+        { withCredentials: true }
+      );
       // toast.success("Status updated!");
       console.log("Status updated successfully!");
       fetchOrders(); // Refresh UI
@@ -174,7 +179,7 @@ setOrderId(orderId); // Set the orderId dynamically
   //     setLoading(false);
   //   }
   // };
-return (
+  return (
     <div className="p-6 bg-gray-50 min-h-screen">
       <div className="max-w-7xl mx-auto">
         <div className="flex justify-between items-center mb-8">
@@ -492,7 +497,9 @@ return (
                               <input
                                 type="checkbox"
                                 checked={selectedItems.includes(item._id)}
-                                onChange={() => toggleItemSelection(item._id, order._id)} // Pass orderId here
+                                onChange={() =>
+                                  toggleItemSelection(item._id, order._id)
+                                } // Pass orderId here
                                 className="mr-3"
                               />
                               <span>

@@ -67,9 +67,10 @@ const ProductsSection = () => {
   const toggleCartModal = () => setShowCartModal((prev) => !prev);
 
   const filteredAndSorted = products
-    .filter((p) =>
-      p.name.toLowerCase().includes(search.toLowerCase()) &&
-      (filter ? p.category === filter : true)
+    .filter(
+      (p) =>
+        p.name.toLowerCase().includes(search.toLowerCase()) &&
+        (filter ? p.category === filter : true)
     )
     .sort((a, b) =>
       sort === "price" ? a.price - b.price : a.name.localeCompare(b.name)

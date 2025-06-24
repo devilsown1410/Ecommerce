@@ -88,7 +88,6 @@ const PaymentPage = () => {
     };
   }, [items]);
 
-
   const handleQuantityChange = (product, qty) => {
     if (!product || !product._id) {
       console.error("Invalid product:", product);
